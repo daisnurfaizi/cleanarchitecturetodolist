@@ -9,11 +9,11 @@ namespace Config {
         static function getConnection()
         {
             $host = 'localhost';
-            $port = '3360';
+            $port = '3306';
             $database = 'belajarphptodolist';
             $username = 'root';
             $pass = '';
-            return new PDO("mysql:host=$host;dbnames=$database,$username,$pass");
+            return new PDO("mysql:host=" . $host . ";dbname=" . $database, $username, $pass);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Service {
             echo "TODO LIST";
             $todolist = $this->todolistRepository->findAll();
             foreach ($todolist as $number => $value) {
-                echo "$number" . $value->getTodo();
+                echo $value->getId() . " " . $value->getTodo();
             }
         }
         function addTodolist(string $todo): void
