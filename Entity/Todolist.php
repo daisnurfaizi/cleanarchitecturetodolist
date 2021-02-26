@@ -28,19 +28,13 @@ namespace Entity {
         {
             $this->todo = $todo;
 
-            return $this;
+            return $this->todo;
         }
-        public function getId(): int
+        public function getId()
         {
             return $this->id;
         }
-
-        /**
-         * Set the value of id
-         *
-         * @return  self
-         */
-        public function setId($id): int
+        public function setId($id)
         {
             $this->id = $id;
 

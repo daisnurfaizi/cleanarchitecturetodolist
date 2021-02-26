@@ -2,6 +2,7 @@
 
 namespace Repository {
 
+    use Config\Database;
     use Entity\Todolist;
     use PDO;
 
@@ -14,11 +15,11 @@ namespace Repository {
 
     class TodolistRepositoryImpl implements TodolistRepository
     {
-        private array $todolist = array();
+        public array $todolist = array();
         private PDO $coneksi;
-        public function __construct(PDO $coneksi)
+        public function __construct($koneksi)
         {
-            $this->coneksi = $coneksi;
+            $this->coneksi = $koneksi;
         }
         function save(Todolist $todolist): void
         {
@@ -67,8 +68,9 @@ namespace Repository {
                 // $result[] = new Todolist();
                 $todolist = new Todolist();
                 $todolist->setId($row['id']);
-                $todolist->getId();
-                $result[] = new Todolist();
+                $todolist->setTodo($row['todo']);
+                $result[] = $todolist;
+                // var_dump($todolist);
             }
 
             return $result;
