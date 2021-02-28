@@ -3,6 +3,8 @@
 namespace Repository {
 
     use Entity\Todolist;
+    use PDO;
+    use PDOException;
 
     interface TodolistRepository
     {
@@ -12,6 +14,8 @@ namespace Repository {
         function remove(int $number): bool;
 
         function findAll(): array;
+
+        function updateData(Todolist $todolist, int $id_todolist);
     }
 
     class TodolistRepositoryImpl implements TodolistRepository
@@ -94,24 +98,68 @@ namespace Repository {
             }
         }
 
+        function updateData(Todolist $todolist, int $id_todolist)
+        {
+
+            $sql = "SELECT id FROM todolist WHERE id = ?";
+            $statement = $this->connection->prepare($sql);
+            $statement->execute([$id_todolist]);
+
+            $sqlupdate = "UPDATE todolist SET 
+            todo = :todo, 
+            todo2 = :todo2, 
+            todo3 = :todo3, 
+            todo4 = :todo4, 
+            todo5 = :todo5, 
+            todo6 = :todo6, 
+            todo7 = :todo7, 
+            todo8 = :todo8, 
+            todo9 = :todo9
+            
+            WHERE id =:id ";
+            $updatetodo = $todolist->getTodo();
+            $updatetodo2 = $todolist->getTodo2();
+            $updatetodo3 = $todolist->getTodo3();
+            $updatetodo4 = $todolist->getTodo4();
+            $updatetodo5 = $todolist->getTodo5();
+            $updatetodo6 = $todolist->getTodo6();
+            $updatetodo7 = $todolist->getTodo7();
+            $updatetodo8 = $todolist->getTodo8();
+            $updatetodo9 = $todolist->getTodo9();
+            $sqlselect = "SELECT * FROM todolist WHERE id = ?";
+            $statement = $this->connection->prepare($sqlselect);
+            $statement->execute([$id_todolist]);
+            if ($statement->fetch()) {
+                $transaction = $this->connection;
+                $transaction->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                try {
+                    $transaction->beginTransaction();
+                    $data = $this->connection->prepare($sqlupdate);
+                    $data->bindParam('todo', $updatetodo);
+                    $data->bindParam('todo2', $updatetodo2);
+                    $data->bindParam('todo3', $updatetodo3);
+                    $data->bindParam('todo4', $updatetodo4);
+                    $data->bindParam('todo5', $updatetodo5);
+                    $data->bindParam('todo6', $updatetodo6);
+                    $data->bindParam('todo7', $updatetodo7);
+                    $data->bindParam('todo8', $updatetodo8);
+                    $data->bindParam('todo9', $updatetodo9);
+                    $data->bindParam('id', $id_todolist);
+                    $data->execute();
+                    $transaction->commit();
+                    return $data->rowCount();
+                } catch (PDOException $e) {
+                    $transaction->rollBack();
+                }
+            }
+        }
+
         function findAll(): array
         {
-            // return $this->todolist;
-            $sql = "SELECT id, todo FROM todolist";
+            $sql = "SELECT * FROM todolist";
             $statement = $this->connection->prepare($sql);
             $statement->execute();
-
-            $result = [];
-
-            foreach ($statement as $row) {
-                $todolist = new Todolist();
-                $todolist->setId($row['id']);
-                $todolist->setTodo($row['todo']);
-
-                $result[] = $todolist;
-            }
-
-            return $result;
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 }

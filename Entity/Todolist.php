@@ -6,7 +6,6 @@ namespace Entity {
     {
 
         private int $id;
-
         private string $todo;
         private string $todo2;
         private string $todo3;
@@ -46,7 +45,7 @@ namespace Entity {
             $this->id = $id;
         }
 
-        public function getId(): int
+        public function getId()
         {
             return $this->id;
         }

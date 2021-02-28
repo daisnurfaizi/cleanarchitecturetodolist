@@ -8,7 +8,7 @@ namespace Service {
     interface TodolistService
     {
 
-        function showTodolist(): void;
+        function showTodolist();
 
         function addTodolist(
             string $todo,
@@ -23,6 +23,18 @@ namespace Service {
         ): void;
 
         function removeTodolist(int $number): void;
+        function updateTodolist(
+            string $todo,
+            string $todo2,
+            string $todo3,
+            string $todo4,
+            string $todo5,
+            string $todo6,
+            string $todo7,
+            string $todo8,
+            string $todo9,
+            int $number
+        );
     }
 
     class TodolistServiceImpl implements TodolistService
@@ -35,13 +47,9 @@ namespace Service {
             $this->todolistRepository = $todolistRepository;
         }
 
-        function showTodolist(): void
+        function showTodolist()
         {
-            echo "TODOLIST" . PHP_EOL;
-            $todolist = $this->todolistRepository->findAll();
-            foreach ($todolist as $number => $value) {
-                echo $value->getId() . ". " . $value->getTodo() . PHP_EOL;
-            }
+            return $todolist = $this->todolistRepository->findAll();
         }
 
         function addTodolist(
@@ -77,6 +85,38 @@ namespace Service {
             } else {
                 echo "GAGAL MENGHAPUS TODOLIST" . PHP_EOL;
             }
+        }
+
+        function updateTodolist(
+            string $todo,
+            string $todo2,
+            string $todo3,
+            string $todo4,
+            string $todo5,
+            string $todo6,
+            string $todo7,
+            string $todo8,
+            string $todo9,
+            int $id_todolist
+        ) {
+            $todolist = new Todolist(
+                $todo,
+                $todo2,
+                $todo3,
+                $todo4,
+                $todo5,
+                $todo6,
+                $todo7,
+                $todo8,
+                $todo9,
+            );
+            $id_todolist = $id_todolist;
+            // if ($this->todolistRepository->updateData($todolist, $id_todolist)) {
+            //     echo "SUKSES UPDATE TODOLIST" . PHP_EOL;
+            // } else {
+            //     echo "Gagal UPDATE TODOLIST" . PHP_EOL;
+            // }
+            return $this->todolistRepository->updateData($todolist, $id_todolist);
         }
     }
 }

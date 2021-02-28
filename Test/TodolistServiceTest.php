@@ -9,32 +9,31 @@ use Entity\Todolist;
 use Service\TodolistServiceImpl;
 use Repository\TodolistRepositoryImpl;
 
-function testShowTodolist(): void
+function testShowTodolist()
 {
     $connection = \Config\Database::getConnection();
     $todolistRepository = new TodolistRepositoryImpl($connection);
     $todolistService = new TodolistServiceImpl($todolistRepository);
-    $todolistService->addTodolist(
-        "Belajar PHP",
-        "Belajar Python",
-        "Belajar Pearl",
-        "Belajar C",
-        "Belajar C++",
-        "Belajar C#",
-        "Belajar Java",
-        "Belajar Javascript",
-        "Belajar Go",
-        "Belajar Ruby",
-    );
+    // $todolistService->addTodolist(
+    //     "Belajar PHP",
+    //     "Belajar Python",
+    //     "Belajar Pearl",
+    //     "Belajar C",
+    //     "Belajar C++",
+    //     "Belajar C#",
+    //     "Belajar Java",
+    //     "Belajar Javascript",
+    //     "Belajar Go",
+    //     "Belajar Ruby",
+    // );
 
-    $todolistService->showTodolist();
+    return $todolistService->showTodolist();
 }
 
-function testAddTodolist(): void
+function testAddTodolist()
 {
     $connection = \Config\Database::getConnection();
     $todolistRepository = new TodolistRepositoryImpl($connection);
-
     $todolistService = new TodolistServiceImpl($todolistRepository);
     $todolistService->addTodolist(
         "Belajar PHP",
@@ -67,5 +66,38 @@ function testRemoveTodolist(): void
     echo $todolistService->removeTodolist(1) . PHP_EOL;
 }
 
-testShowTodolist();
+function testupdateTodolist()
+{
+    $connection = \Config\Database::getConnection();
+    $todolistRepository = new TodolistRepositoryImpl($connection);
+    $todolistService = new TodolistServiceImpl($todolistRepository);
+    return $todolistService->updateTodolist(
+        "Belajar Design Patern update",
+        "Belajar Golang update",
+        "Belajar Php update",
+        "Belajar Flutter update",
+        "Belajar Java update",
+        "Belajar Dart updpate ",
+        "Belajar Python",
+        "Belajar Ruby",
+        "Belajar C",
+        1
+    );
+}
+// update todolist
+// testupdateTodolist();
+//------------------
+// testRemoveTodolist();
+// $showtodolist = array(testShowTodolist());
+// select all todolist
+if (!empty((array)testShowTodolist())) {
+    foreach ((array)testShowTodolist() as $number => $value) {
+        echo $value['id'] . " " . $value['todo'] . $value['todo2'] . $value['todo3'] . $value['todo4'] . $value['todo5'] . $value['todo6'] . $value['todo7'] . $value['todo8'] . $value['todo9'] . "<br>";
+    }
+} else {
+    echo "data tidak ada";
+}
+// ------------------
+// add todolist
 // testAddTodolist();
+// -------------------
